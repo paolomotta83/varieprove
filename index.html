@@ -35,17 +35,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #empty{color:var(--fg)}}
 :root[data-theme="dark"] #empty{color:var(--fg)}
 
-#gate{position:fixed;inset:0;z-index:20;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:24px}
-#gate form{display:flex;flex-direction:column;gap:12px;width:min(320px,100%)}
-#gate label{font-size:15px;color:var(--bar)}
-#gate input{font-size:20px;letter-spacing:.3em;padding:12px 14px;border:1px solid var(--thumb);border-radius:10px;background:transparent;color:var(--bar);text-align:center}
-#gate button{font-size:16px;padding:12px;border:0;border-radius:10px;background:var(--bar);color:var(--fg);cursor:pointer}
-#gate p{margin:0;min-height:1.2em;font-size:14px;color:#c0392b;text-align:center}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #gate label,:root:not([data-theme="light"]) #gate input{color:var(--fg)}:root:not([data-theme="light"]) #gate button{background:var(--chip-on);color:var(--chip-on-fg)}}
 </style>
 </head>
 <body>
-<div id="gate"><form id="gf" autocomplete="off"><label for="pw">Password</label><input id="pw" type="password" inputmode="numeric" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus><button type="submit">Entra</button><p id="err" role="alert"></p></form></div>
 <nav id="bar"><ul id="list"></ul></nav>
 <main id="stage">
   <div id="empty">Scegli una voce dalla barra</div>
@@ -100,16 +92,6 @@ function fromApi(){
 }
 fromJson().catch(fromApi).then(render).catch(function(){msg("Elenco non disponibile")});
 
-// Accesso: confronto con l’impronta SHA-256 (la password non compare nel codice)
-var HASH="eb5910a9bb93391a8ef0820513568f868fe5f34525fa840e75196a964e372803";
-async function sha(t){var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("")}
-function open_(){document.getElementById("gate").remove();try{sessionStorage.setItem("ok","1")}catch(e){}}
-try{if(sessionStorage.getItem("ok")==="1")open_();}catch(e){}
-document.getElementById("gf").addEventListener("submit",async function(e){
-  e.preventDefault();var pw=document.getElementById("pw"),err=document.getElementById("err");
-  try{if(await sha(pw.value)===HASH){open_();return;}}catch(x){err.textContent="Browser non supportato (serve https).";return;}
-  err.textContent="Password errata";pw.value="";pw.focus();
-});
 </script>
 </body>
 </html>
