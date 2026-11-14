@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Turni</title>
+<style>
+:root{--bg:#f7f7f5;--sf:#fff;--tx:#1d1d1b;--mu:#7a7a75;--ln:#e4e4df;--ac:#2f6fed;--rd:#e5383b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161617;--sf:#222224;--tx:#f0f0ee;--mu:#9a9a95;--ln:#333336;--ac:#6a9bff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161617;--sf:#222224;--tx:#f0f0ee;--mu:#9a9a95;--ln:#333336;--ac:#6a9bff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;max-width:640px;margin:0 auto;padding:0 12px 0;display:flex;flex-direction:column;min-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+h1{font-size:22px;margin:14px 0 8px}
+.tabs{display:flex;border-bottom:1px solid var(--ln);margin-bottom:10px;overflow-x:auto}
+.tabs button{background:none;border:0;color:var(--mu);font:inherit;padding:8px 14px;border-bottom:2px solid transparent}
+.tabs .on{color:var(--ac);border-color:var(--ac);font-weight:600}
+.seg{display:flex;background:var(--sf);border:1px solid var(--ln);border-radius:10px;overflow:hidden;margin-bottom:10px}
+.seg button{flex:1;background:none;border:0;color:var(--tx);font:inherit;font-size:14px;padding:8px 0}
+.seg .on{background:var(--ac);color:#fff}
+.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.nav b{font-size:18px;text-transform:capitalize}
+.nav button{background:var(--sf);border:1px solid var(--ln);color:var(--tx);border-radius:8px;font:inherit;padding:4px 12px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;text-align:center}
+.dh{font-size:12px;color:var(--mu);padding:4px 0}
+.c{background:var(--sf);border:1px solid transparent;border-radius:8px;min-height:46px;padding:4px 0;font:inherit;color:var(--tx);display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.c.o{opacity:.4}.c.t{border-color:var(--ac)}.c.s{background:var(--ac);color:#fff}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--rd);margin-top:3px}
+.nd{height:6px;margin-top:3px}
+.wr{display:flex;align-items:center;gap:10px;width:100%;background:var(--sf);border:1px solid transparent;border-radius:10px;padding:10px;margin-bottom:4px;font:inherit;color:var(--tx);text-align:left}
+.wr.t{border-color:var(--ac)}.wr.s{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 14%,var(--sf))}
+.wr .n{width:44px;text-align:center;font-size:13px;color:var(--mu)}.wr .n b{display:block;font-size:18px;color:var(--tx)}
+.wr .p{flex:1;font-size:14px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.yg{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ym{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:8px;font:inherit;color:var(--tx);text-align:left}
+.ym b{display:block;text-transform:capitalize;margin-bottom:4px;font-size:14px}
+.mg{display:grid;grid-template-columns:repeat(7,1fr);font-size:9px;text-align:center;line-height:1.7}
+.mg i{font-style:normal;position:relative}.mg i.h::after{content:"";position:absolute;left:50%;bottom:0;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--rd)}
+.panel{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:12px;margin-top:12px}
+.panel h2{font-size:16px;margin:0 0 8px;text-transform:capitalize}
+.it{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--ln)}
+.it span{flex:1}.it.d span{text-decoration:line-through;color:var(--mu)}
+.it small{color:var(--mu)}
+.it .x{background:none;border:0;color:var(--mu);font-size:18px}
+.em{color:var(--mu);font-size:14px;margin:4px 0 8px}
+.add{display:flex;gap:6px;margin-top:10px}
+.add input{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:8px;min-width:0}
+.add input[type=text]{flex:1}.add button{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:0 14px;font:inherit}
+.sh{display:flex;gap:6px;margin-top:8px}.sh button{flex:1;background:var(--bg);border:1px solid var(--ln);color:var(--tx);border-radius:8px;padding:8px 0;font:inherit;font-weight:600}.sh .on{background:var(--ac);color:#fff;border-color:var(--ac)}.sl{font-size:11px;font-weight:700;color:var(--ac);line-height:1.2}.c.s .sl{color:#fff}.c .sl{font-size:9.5px;white-space:nowrap}.c.r{background:color-mix(in srgb,var(--rd) 22%,var(--sf));color:var(--rd);font-weight:700}.c.r .sl{color:var(--rd)}.c.r.s{background:var(--rd);color:#fff}.c.r.s .sl{color:#fff}.c.r.s .dot{background:#fff}.wr.r{background:color-mix(in srgb,var(--rd) 18%,var(--sf))}.wr.r .sl{color:var(--rd)}
+.tl{height:432px;overflow-y:auto;background:var(--sf);border:1px solid var(--ln);border-radius:12px}.tg{position:relative}.hr{position:absolute;left:0;right:0;height:48px;border-top:1px solid var(--ln)}.hr span{position:absolute;left:6px;top:2px;font-size:11px;color:var(--mu)}.ev{position:absolute;background:color-mix(in srgb,var(--ac) 25%,var(--sf));border-left:3px solid var(--ac);border-radius:6px;padding:2px 6px;font-size:12px;line-height:1.25;overflow:hidden}.ev small{display:block;color:var(--mu);font-size:10px}.ev.d{opacity:.5}.ad{background:var(--sf);border:1px solid var(--ln);border-radius:10px;padding:6px 10px;margin-bottom:6px;font-size:14px}
+.c.r{background:color-mix(in srgb,var(--rd) 22%,var(--sf));color:var(--rd);font-weight:700}.c.r.s{background:var(--rd);color:#fff}.c.r .sl{color:var(--rd)}.c.r.s .sl{color:#fff}.c.r.s .dot{background:#fff}.wr.r{background:var(--sf)}.wr.r.s{background:color-mix(in srgb,var(--ac) 14%,var(--sf))}.wr.r .n b{color:var(--rd)}.wr.r .sl{color:var(--ac)}
+.ev{z-index:1}.ev.rp{left:52px;right:4px;border:2px solid var(--rd);background:color-mix(in srgb,var(--rd) 40%,transparent);z-index:2}
+.add input[type=time]{width:92px;padding:8px 4px}.ex{margin-top:8px}
+.it input[type=time]{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:6px 4px;width:88px}.it .sv{background:var(--ac);color:#fff;border:0;border-radius:8px;padding:6px 10px;font:inherit}.ev{cursor:pointer}.ev.rp{pointer-events:none}.pe{pointer-events:auto;position:absolute;right:0;top:0;padding:2px 6px;font-size:13px;cursor:pointer}
+#pn{padding-bottom:12px}#sb{position:sticky;bottom:0;z-index:5;margin-top:auto;background:var(--bg);border-top:1px solid var(--ln)}#sm{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:8px 4px;font-size:12px;color:var(--mu);cursor:pointer}#sm span:nth-child(2){text-align:center}#sm span:nth-child(3){text-align:right}#calc{max-height:45vh;overflow-y:auto;padding:4px 4px 12px;border-top:1px solid var(--ln)}.cr{display:flex;justify-content:space-between;font-size:14px;padding-top:6px}.cr b{font-weight:600}.cs{font-size:12px;color:var(--mu)}.ch{font-size:11px;font-weight:600;color:var(--mu);margin:12px 0 4px;text-transform:uppercase;letter-spacing:.04em}.wb{display:flex;gap:6px;align-items:flex-end;height:68px}.wc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;font-size:11px;color:var(--mu)}.wc i{display:block;width:60%;min-height:2px;background:var(--rd);border-radius:3px 3px 0 0}#sm b{color:var(--tx);font-weight:600}.ex input[type=range]{width:100%;margin:0}.el{display:flex;justify-content:space-between;font-size:12px;color:var(--mu)}#ei{display:flex;gap:6px;margin-top:6px}#ei input{flex:1;min-width:0;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--ln);border-radius:8px;padding:8px}
+</style>
+</head>
+<body>
+<h1>Turni</h1>
+<div class="seg" id="seg"></div>
+<div class="nav"><button id="pv">‹</button><b id="ti"></b><button id="nx">›</button></div>
+<div id="cal"></div>
+<div id="pn"></div>
+<div id="sb"><div id="sm" onclick="tc()"></div><div id="calc" hidden><div id="cc"></div></div></div>
+<script>
+const V=['giorno','settimana','mese','anno'],MS=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],DS=['lun','mar','mer','gio','ven','sab','dom'];
+let view='mese',cur=new Date(),sel=new Date(),tasks={},shifts={};
+cur.setHours(12);sel.setHours(12);
+try{tasks=JSON.parse(localStorage.getItem('turni-agenda')||'{}')}catch(e){}
+try{shifts=JSON.parse(localStorage.getItem('turni-shifts')||'{}')}catch(e){}
+Object.keys(shifts).forEach(k=>{const v=shifts[k];if(typeof v==='string')shifts[k]=['Nr','Gr'].includes(v)?{b:v}:{a:v}});const lab=k=>{const s=shifts[k]||{};return [s.a,s.b].filter(Boolean).join(' ')};
+const save=()=>{try{localStorage.setItem('turni-agenda',JSON.stringify(tasks));localStorage.setItem('turni-shifts',JSON.stringify(shifts))}catch(e){}};
+const K=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const D=(y,m,d)=>new Date(y,m,d,12);
+const same=(a,b)=>K(a)===K(b);
+const open=k=>(tasks[k]||[]).some(x=>!x.f&&!x.s);
+const off=d=>(d.getDay()+6)%7;
+const $=id=>document.getElementById(id);
+function go(n){ed=null;
+ if(view==='giorno'){cur=D(cur.getFullYear(),cur.getMonth(),cur.getDate()+n);sel=cur}
+ else if(view==='settimana')cur=D(cur.getFullYear(),cur.getMonth(),cur.getDate()+7*n);
+ else if(view==='mese')cur=D(cur.getFullYear(),cur.getMonth()+n,1);
+ else cur=D(cur.getFullYear()+n,cur.getMonth(),1);
+ render();
+}
+function pick(k){ed=null;const[a,b,c]=k.split('-').map(Number);sel=D(a,b-1,c);cur=view==='mese'?cur:sel;render()}
+function render(){
+ $('seg').innerHTML=V.map(v=>`<button class="${v===view?'on':''}" onclick="view='${v}';if(view==='giorno')cur=sel;render()">${v}</button>`).join('');
+ const today=new Date();let h='',t='';
+ if(view==='mese'){
+  t=MS[cur.getMonth()]+' '+cur.getFullYear();
+  const f=D(cur.getFullYear(),cur.getMonth(),1);h='<div class="grid">'+DS.map(d=>`<div class="dh">${d}</div>`).join('');
+  for(let i=0;i<42;i++){const d=D(f.getFullYear(),f.getMonth(),1-off(f)+i),k=K(d);
+   h+=`<button class="c${d.getMonth()!==cur.getMonth()?' o':''}${same(d,today)?' t':''}${same(d,sel)?' s':''}${(shifts[k]||{}).b?' r':''}" onclick="pick('${k}')">${d.getDate()}<span class="sl">${lab(k)||'&nbsp;'}</span>${open(k)?'<i class="dot"></i>':'<i class="nd"></i>'}</button>`}
+  h+='</div>';
+ }else if(view==='settimana'){
+  const s=D(cur.getFullYear(),cur.getMonth(),cur.getDate()-off(cur)),e=D(s.getFullYear(),s.getMonth(),s.getDate()+6);
+  t=s.getDate()+' '+MS[s.getMonth()].slice(0,3)+' – '+e.getDate()+' '+MS[e.getMonth()].slice(0,3);
+  for(let i=0;i<7;i++){const d=D(s.getFullYear(),s.getMonth(),s.getDate()+i),k=K(d),l=tasks[k]||[];
+   h+=`<button class="wr${same(d,today)?' t':''}${same(d,sel)?' s':''}${(shifts[k]||{}).b?' r':''}" onclick="pick('${k}')"><div class="n">${DS[i]}<b>${d.getDate()}</b></div><div class="p">${l.map(x=>x.t).join(', ')||'—'}</div><span class="sl" style="font-size:14px">${lab(k)}</span>${open(k)?'<i class="dot"></i>':''}</button>`}
+ }else if(view==='giorno'){
+  t=DS[off(cur)]+' '+cur.getDate()+' '+MS[cur.getMonth()];h=tline(K(cur),K(D(cur.getFullYear(),cur.getMonth(),cur.getDate()-1)));
+ }else{
+  t=cur.getFullYear();h='<div class="yg">';
+  for(let m=0;m<12;m++){const f=D(cur.getFullYear(),m,1),n=D(cur.getFullYear(),m+1,0).getDate();
+   h+=`<button class="ym" onclick="cur=D(${cur.getFullYear()},${m},1);view='mese';render()"><b>${MS[m]}</b><div class="mg">`+'<i></i>'.repeat(off(f))+Array.from({length:n},(_,i)=>`<i${open(K(D(cur.getFullYear(),m,i+1)))?' class="h"':''}>${i+1}</i>`).join('')+'</div></button>'}
+  h+='</div>';
+ }
+ $('ti').textContent=t;$('cal').innerHTML=h;$('sm').innerHTML=sumHtml();$('cc').innerHTML=calcHtml();
+ if(view==='giorno'){const e=$('tl');e.scrollTop=tlTop;e.onscroll=()=>{tlTop=e.scrollTop}}
+ if(view==='anno'){$('pn').innerHTML='';return}
+ const k=K(sel),l=tasks[k]||[];
+ $('pn').innerHTML=`<div class="panel"><h2>${DS[off(sel)]} ${sel.getDate()} ${MS[sel.getMonth()]}</h2>`+
+  (l.length?l.map((x,i)=>i===ed?`<div class="it"><span>${esc(x.t)}</span><input type="time" id="eh" value="${x.h||''}"><input type="time" id="ef" value="${x.e||''}"><button class="sv" onclick="saveEd()">✓</button><button class="x" onclick="ed=null;render()">✕</button></div>`:`<div class="it${x.f?' d':''}">${x.s?'':`<input type="checkbox" ${x.f?'checked':''} onchange="tog(${i})">`}<span onclick="edt(${i})" style="cursor:pointer">${esc(x.t)} ${x.h?`<small>${x.h}${x.e?'–'+x.e+(x.n?' (giorno dopo)':''):''}</small>`:''}</span><button class="x" onclick="del(${i})">×</button></div>`).join(''):'<div class="em">Nessuna attività</div>')+
+  `<div class="add"><input type="text" id="nt" placeholder="Nuova attività" value="${esc(dr.t).replace(/"/g,'&quot;')}" oninput="dr.t=this.value"><input type="time" id="nh" value="${dr.h}" oninput="dr.h=this.value"><input type="time" id="nf" value="${dr.f}" oninput="dr.f=this.value"><button onclick="add()">+</button></div><div class="sh">${['M','P','R','F/A'].map(s=>`<button class="${(shifts[k]||{}).a===s?'on':''}" onclick="setSh('a','${s}')">${s}</button>`).join('')}</div><div class="sh">${['Gr','Nr','GNR'].map(s=>`<button class="${(shifts[k]||{}).b===s?'on':''}" onclick="setSh('b','${s}')">${s}</button>`).join('')}</div></div>`;
+}
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function add(){const t=dr.t.trim();if(!t)return;const k=K(sel),x={t,h:dr.h,f:0};
+ if(dr.h&&dr.f){x.e=dr.f;x.n=dr.f<=dr.h?1:0}
+ (tasks[k]=tasks[k]||[]).push(x);dr={t:'',h:'',f:''};save();render()}
+function tog(i){const l=tasks[K(sel)];l[i].f=l[i].f?0:1;save();render()}
+function del(i){ed=null;const k=K(sel),x=tasks[k][i];tasks[k].splice(i,1);if(!tasks[k].length)delete tasks[k];if(x.s&&shifts[k]){delete shifts[k][x.s];if(!shifts[k].a&&!shifts[k].b)delete shifts[k]}save();render()}
+let dr={t:'',h:'',f:''},ed=null;
+function edt(i){ed=i;render();const p=$('pn');if(p)p.scrollIntoView({behavior:'smooth',block:'nearest'})}
+function saveEd(){const k=K(sel),x=tasks[k][ed],h=$('eh').value,f=$('ef').value;x.h=h;x.e=h?f:'';x.n=h&&f&&f<=h?1:0;ed=null;save();render()}
+function sumHtml(){const y=cur.getFullYear(),m=cur.getMonth(),d=cur.getDate();let a,b;
+ if(view==='giorno'){a=b=D(y,m,d)}else if(view==='settimana'){a=D(y,m,d-off(cur));b=D(y,m,d-off(cur)+6)}else if(view==='mese'){a=D(y,m,1);b=D(y,m+1,0)}else{a=D(y,0,1);b=D(y,11,31)}
+ const mm=s=>{const[p,q]=s.split(':').map(Number);return p*60+q};
+ let T=0,R=0,G=0;
+ for(let x=a;x<=b;x=D(x.getFullYear(),x.getMonth(),x.getDate()+1))(tasks[K(x)]||[]).forEach(t=>{if(!t.h||!t.e)return;const s=mm(t.h),e=mm(t.e),u=e>s?e-s:e+1440-s;if(t.s==='a')T+=u;else if(t.s==='b')R+=u;else G+=u});
+ const f=u=>Math.floor(u/60)+'h'+(u%60?String(u%60).padStart(2,'0'):''),q=(Math.round(R/60/12*100)/100).toString().replace('.',',');
+ return `<span title="Ore di turni">THT <b>${f(T)}</b></span><span title="Ore di reperibilità">THR <b>${f(R)}</b> [${q}]</span><span title="Ore di altre attività">THG <b>${f(G)}</b></span>`}
+function rng(){const y=cur.getFullYear(),m=cur.getMonth(),d=cur.getDate();if(view==='giorno')return[D(y,m,d),D(y,m,d)];if(view==='settimana')return[D(y,m,d-off(cur)),D(y,m,d-off(cur)+6)];if(view==='mese')return[D(y,m,1),D(y,m+1,0)];return[D(y,0,1),D(y,11,31)]}
+function calcHtml(){const[a,b]=rng(),mm=s=>{const[p,q]=s.split(':').map(Number);return p*60+q},N={M:0,P:0,R:0,'F/A':0,Gr:0,Nr:0,GNR:0};let T=0,R=0,G=0,ng=0;
+ for(let x=a;x<=b;x=D(x.getFullYear(),x.getMonth(),x.getDate()+1)){const k=K(x),s=shifts[k]||{};if(s.a)N[s.a]++;if(s.b)N[s.b]++;
+  (tasks[k]||[]).forEach(t=>{if(!t.s)ng++;if(!t.h||!t.e)return;const p=mm(t.h),e=mm(t.e),u=e>p?e-p:e+1440-p;if(t.s==='a')T+=u;else if(t.s==='b')R+=u;else G+=u})}
+ const f=u=>Math.floor(u/60)+'h'+(u%60?String(u%60).padStart(2,'0'):''),q=(Math.round(R/60/12*100)/100).toString().replace('.',',');
+ const y=cur.getFullYear(),m=cur.getMonth(),last=D(y,m+1,0).getDate(),W=[0,0,0,0,0,0,0],fe=k=>(tasks[k]||[]).some(t=>t.s==='b'&&(t.n||(t.e&&t.e>'19:30')));
+ let wt=0,wr=0,wf=0;
+ for(let d=1;d<=last;d++){const x=D(y,m,d),s=shifts[K(x)]||{};if(s.b)W[off(x)]++;
+  if(off(x)===5){const su=(shifts[K(D(y,m,d+1))]||{}).b,fr=fe(K(D(y,m,d-1)));wt++;if(s.b||su||fr){wr++;if(!s.b&&!su)wf++}}}
+ const mx=Math.max(...W,1);
+ return `<div class="ch">Ore · ${$('ti').textContent}</div>`+
+ `<div class="cr"><span>Turni</span><b>${f(T)}</b></div><div class="cs">M ${N.M} · P ${N.P} · R ${N.R} · F/A ${N['F/A']}</div>`+
+ `<div class="cr"><span>Reperibilità</span><b>${f(R)} [${q}]</b></div><div class="cs">Gr ${N.Gr} · Nr ${N.Nr} · GNR ${N.GNR}</div>`+
+ `<div class="cr"><span>Altre attività</span><b>${f(G)}</b></div><div class="cs">${ng} attività</div>`+
+ `<div class="ch">Reperibilità per giorno · ${MS[m]} ${y}</div><div class="wb">${W.map((n,i)=>`<div class="wc"><span>${n}</span><i style="height:${n/mx*36}px"></i><small>${DS[i]}</small></div>`).join('')}</div>`+
+ `<div class="cr"><span>Weekend con reperibilità</span><b>${wr} su ${wt}</b></div><div class="cs">di cui solo per il venerdì sera: ${wf}</div><div class="cr"><span>Weekend liberi</span><b>${wt-wr}</b></div>`}
+let co=0;function tc(){co=!co;$('calc').hidden=!co;$('sm').innerHTML=sumHtml()}
+let tlTop=7*48;
+function tline(k,pk){const HH=48,l=tasks[k]||[],mm=s=>{const[a,b]=s.split(':').map(Number);return a*60+b};
+ const ev=l.filter(x=>x.h).map(x=>{const s=mm(x.h);let e=x.e?mm(x.e):s+60;if(e<=s)e=1440;return{x,s,e}}).sort((a,b)=>a.s-b.s);
+ const cols=[],rp=ev.filter(o=>o.x.s==='b').concat((tasks[pk]||[]).filter(x=>x.s==='b'&&x.n&&x.e).map(x=>({x,s:0,e:mm(x.e),sp:1}))),nv=ev.filter(o=>o.x.s!=='b');nv.forEach(o=>{let c=cols.findIndex(z=>z<=o.s);if(c<0){c=cols.length;cols.push(0)}cols[c]=o.e;o.c=c});
+ const n=Math.max(cols.length,1),nt=l.filter(x=>!x.h);
+ return (nt.length?`<div class="ad">${nt.map(x=>esc(x.t)).join(' · ')}</div>`:'')+`<div class="tl" id="tl"><div class="tg" style="height:${24*HH}px">`+
+  Array.from({length:24},(_,i)=>`<div class="hr" style="top:${i*HH}px"><span>${String(i).padStart(2,'0')}:00</span></div>`).join('')+
+  rp.map(o=>`<div class="ev rp" style="top:${o.s/60*HH}px;height:${Math.max((o.e-o.s)/60*HH,18)}px">${esc(o.x.t)}<small>${o.sp?'00:00':o.x.h}${o.x.e?'–'+o.x.e:''}</small>${o.sp?'':`<span class="pe" onclick="edt(${l.indexOf(o.x)})">✎</span>`}</div>`).join('')+nv.map(o=>`<div class="ev${o.x.f?' d':''}" onclick="edt(${l.indexOf(o.x)})" style="top:${o.s/60*HH}px;height:${Math.max((o.e-o.s)/60*HH,18)}px;left:calc(52px + (100% - 56px)*${o.c/n});width:calc((100% - 56px)/${n} - 2px)">${esc(o.x.t)}<small>${o.x.h}${o.x.e?'–'+o.x.e:''}</small></div>`).join('')+'</div></div>'}
+const AUTO={M:['Mattino','07:30','14:42'],P:['Pomeriggio','12:48','20:00'],R:['Riposo'],Gr:['Giorno reperibile','07:30','19:30'],Nr:['Notte reperibile','19:30','07:30',1],GNR:['Giorno e notte reperibile','07:30','07:30',1]};
+function setSh(r,s){ed=null;const k=K(sel),t=$('nt').value,h=$('nh').value,o=shifts[k]||(shifts[k]={});
+ let l=(tasks[k]||[]).filter(x=>x.s!==r);
+ if(o[r]===s)delete o[r];else{o[r]=s;const a=AUTO[s];if(a)l.push({t:a[0],h:a[1]||'',e:a[2]||'',n:a[3]||0,f:0,s:r})}
+ const rk=x=>x.s==='a'?0:x.s==='b'?1:2;l.sort((p,q)=>rk(p)-rk(q));
+ if(l.length)tasks[k]=l;else delete tasks[k];
+ if(!o.a&&!o.b)delete shifts[k];save();render();$('nt').value=t;$('nh').value=h}
+$('pv').onclick=()=>go(-1);$('nx').onclick=()=>go(1);
+render();
+</script>
+</body>
+</html>

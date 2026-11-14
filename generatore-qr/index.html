@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Generatore QR Nome Utente + Password</title>
+<style>
+:root{--bg:#15171a;--fg:#eceef1;--card:#23262b;--bd:#3d4148;--ac:#cc7c60;--soft:#3b3f47;--err:#fb7185;color-scheme:dark;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--soft:#3b3f47;--bg:#15171a;--fg:#eceef1;--card:#23262b;--bd:#3d4148;--ac:#6d9bff;--err:#fb7185;color-scheme:dark}}
+:root[data-theme="dark"]{--soft:#3b3f47;--bg:#15171a;--fg:#eceef1;--card:#23262b;--bd:#3d4148;--ac:#6d9bff;--err:#fb7185;color-scheme:dark}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;align-items:center;justify-content:center}
+#app{position:relative;display:flex;flex-direction:column;overflow:hidden;background:var(--bg);width:100%;height:100%}
+#app.boxed{border:1px solid var(--bd);border-radius:22px;box-shadow:0 4px 24px rgba(0,0,0,.18)}
+.top{position:absolute;left:0;right:0;top:8px;text-align:right;padding:0 16px;font-family:'Great Vibes','Snell Roundhand','Brush Script MT',cursive;font-style:italic;font-size:28px;line-height:1.2;color:var(--soft)}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:12px;min-height:0}
+.frame{width:min(100%,calc(var(--ah,100vh)*.45),480px);aspect-ratio:1;background:#fff;border-radius:12px;border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.frame canvas{width:100%;height:100%;display:none}
+.frame .hint{color:#777;font-size:14px;text-align:center;padding:16px}
+footer{padding:10px 12px 14px;background:var(--card);border-top:1px solid var(--bd);display:flex;flex-direction:column;gap:8px}
+label{font-size:13px;font-weight:600;display:block;margin-bottom:3px}
+input{width:100%;box-sizing:border-box;font-size:16px;padding:10px;border:2px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg)}
+input.err{border-color:var(--err)}
+.row{display:flex;align-items:center;gap:10px}
+.row .sp{flex:1}
+button{border:0;cursor:pointer;background:#cc7c60;color:#fff;font-weight:600}
+button:active{filter:brightness(.92)}
+.pill{font-size:15px;padding:0 22px;height:44px;border-radius:22px}
+.rb{width:44px;height:44px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center}
+.rb svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+#side{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#printArea{display:none}
+@media print{body>*{display:none!important}body>#printArea{display:block!important}#printArea img{width:100%;max-width:18cm}}
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap">
+</head>
+<body>
+<div id="app">
+<header class="top">Ringrazia Motta</header>
+<main><div class="frame"><canvas id="cv" width="640" height="640"></canvas><div class="hint" id="hint">Compila i campi e premi “Genera QR”</div></div></main>
+<footer>
+  <div><label for="u">Nome Utente</label><input id="u" maxlength="30" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+  <div><label for="p">Password</label><input id="p" maxlength="30" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+  <div id="side">
+    <div><label for="tl">Testo sinistra</label><input id="tl" maxlength="23" autocomplete="off"></div>
+    <div><label for="tr">Testo destra</label><input id="tr" maxlength="23" autocomplete="off"></div>
+  </div>
+  <div class="row">
+    <button id="bg" class="pill">Genera QR</button>
+    <span class="sp"></span>
+    <button id="bt" class="rb" aria-label="Condividi"><svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    <button id="bp" class="rb" aria-label="Stampa"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></button>
+    <button id="bs" class="rb" aria-label="Salva JPG"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></button>
+  </div>
+</footer>
+</div>
+<div id="printArea"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+const $=id=>document.getElementById(id),cv=$('cv'),ctx=cv.getContext('2d');
+let ready=false;
+function fit(){
+  const s=Math.min(screen.width,screen.height)/Math.max(screen.width,screen.height)||0.46;
+  const vw=document.documentElement.clientWidth,vh=window.innerHeight,a=$('app');
+  let w=vw,h=vh;
+  if(vw>600){w=Math.min(vw,vh*s);h=w/s;}
+  a.style.width=w+'px';a.style.height=h+'px';a.style.setProperty('--ah',h+'px');
+  a.classList.toggle('boxed',w<vw-2||h<vh-2);
+  placeTop();
+}
+function placeTop(){const a=$('app'),f=document.querySelector('.frame'),t=document.querySelector('.top');const gap=f.getBoundingClientRect().top-a.getBoundingClientRect().top;t.style.top=Math.max(0,gap/2-t.offsetHeight/2)+'px'}
+if(document.fonts)document.fonts.ready.then(placeTop);
+addEventListener('load',placeTop);
+addEventListener('resize',fit);fit();
+$('u').addEventListener('input',e=>{e.target.value=e.target.value.replace(/[^A-Za-z0-9]/g,'');e.target.classList.remove('err')});
+$('p').addEventListener('input',e=>e.target.classList.remove('err'));
+function draw(){
+  const data=$('u').value+'\t'+$('p').value+'\n';
+  try{if(qrcode.stringToBytesFuncs&&qrcode.stringToBytesFuncs['UTF-8'])qrcode.stringToBytes=qrcode.stringToBytesFuncs['UTF-8'];}catch(e){}
+  const qr=qrcode(0,'M');qr.addData(data,'Byte');qr.make();
+  const n=qr.getModuleCount(),W=640,area=560,cs=Math.floor(area/(n+8)),size=cs*(n+8),ox=(W-size)/2,oy=(W-size)/2;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,W);
+  ctx.fillStyle='#000';
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(qr.isDark(r,c))ctx.fillRect(ox+(c+4)*cs,oy+(r+4)*cs,cs,cs);
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  const F='system-ui,Arial,sans-serif',gap=ox+4*cs;
+  const side=(t,x,a)=>{if(!t)return;
+    ctx.font='bold 100px '+F;const w100=ctx.measureText(t).width;
+    const s=Math.min(gap*0.5,W*0.95/w100*100);
+    ctx.font='bold '+s+'px '+F;
+    ctx.save();ctx.translate(x,W/2);ctx.rotate(a);ctx.fillText(t,0,0);ctx.restore()};
+  side($('tl').value,gap/2,-Math.PI/2);side($('tr').value,W-gap/2,Math.PI/2);
+  cv.style.display='block';$('hint').style.display='none';ready=true;
+}
+$('bg').onclick=()=>{
+  let ok=true;
+  for(const id of['u','p']){const el=$(id);if(!el.value){el.classList.add('err');ok=false}}
+  if(ok)draw();
+};
+$('bt').onclick=()=>{
+  if(!need())return;
+  cv.toBlob(async b=>{
+    const f=new File([b],'qrcode.jpg',{type:'image/jpeg'});
+    try{
+      if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'QR code'});
+      else $('bs').click();
+    }catch(e){if(e.name!=='AbortError')$('bs').click();}
+  },'image/jpeg',0.95);
+};
+['tl','tr'].forEach(id=>$(id).addEventListener('input',()=>{if(ready)draw()}));
+function need(){if(!ready){$('bg').click();}return ready}
+$('bp').onclick=()=>{
+  if(!need())return;
+  $('printArea').innerHTML='';const im=new Image();im.src=cv.toDataURL('image/png');
+  $('printArea').appendChild(im);im.onload=()=>window.print();
+};
+$('bs').onclick=()=>{
+  if(!need())return;
+  const a=document.createElement('a');a.href=cv.toDataURL('image/jpeg',0.95);a.download='qrcode.jpg';
+  document.body.appendChild(a);a.click();a.remove();
+};
+</script>
+</body>
+</html>
