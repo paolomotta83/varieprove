@@ -132,7 +132,7 @@ function sumHtml(){const y=cur.getFullYear(),m=cur.getMonth(),d=cur.getDate();le
  return `<span title="Ore di turni">THT <b>${f(T)}</b></span><span title="Ore di reperibilità">THR <b>${f(R)}</b> [${q}]</span><span title="Ore di altre attività">THG <b>${f(G)}</b></span>`}
 function rng(){const y=cur.getFullYear(),m=cur.getMonth(),d=cur.getDate();if(view==='giorno')return[D(y,m,d),D(y,m,d)];if(view==='settimana')return[D(y,m,d-off(cur)),D(y,m,d-off(cur)+6)];if(view==='mese')return[D(y,m,1),D(y,m+1,0)];return[D(y,0,1),D(y,11,31)]}
 function calcHtml(){const[a,b]=rng(),mm=s=>{const[p,q]=s.split(':').map(Number);return p*60+q},N={M:0,P:0,R:0,'F/A':0,Gr:0,Nr:0,GNR:0};let T=0,R=0,G=0,ng=0;
- for(let x=a;x<=b;x=D(x.getFullYear(),x.getMonth(),x.getDate()+1)){const k=K(x),s=shifts[k]||{};if(s.a)N[s.a]++;if(s.b)N[s.b]++;
+ for(let x=a;x<=b;x=D(x.getFullYear(),x.getMonth(),x.getDate()+1)){const k=K(x),s=shifts[k]||{};if(s.a)N[s.a]++;if(s.b==='GNR'){N.Gr++;N.Nr++}else if(s.b)N[s.b]++;
   (tasks[k]||[]).forEach(t=>{if(!t.s)ng++;if(!t.h||!t.e)return;const p=mm(t.h),e=mm(t.e),u=e>p?e-p:e+1440-p;if(t.s==='a')T+=u;else if(t.s==='b')R+=u;else G+=u})}
  const f=u=>Math.floor(u/60)+'h'+(u%60?String(u%60).padStart(2,'0'):''),q=(Math.round(R/60/12*100)/100).toString().replace('.',',');
  const y=cur.getFullYear(),m=cur.getMonth(),last=D(y,m+1,0).getDate(),W=[0,0,0,0,0,0,0],fe=k=>(tasks[k]||[]).some(t=>t.s==='b'&&t.n&&t.e&&t.e>'00:00');
@@ -142,7 +142,7 @@ function calcHtml(){const[a,b]=rng(),mm=s=>{const[p,q]=s.split(':').map(Number);
  const mx=Math.max(...W,1);
  return `<div class="ch">Ore · ${$('ti').textContent}</div>`+
  `<div class="cr"><span>Turni</span><b>${f(T)}</b></div><div class="cs">M ${N.M} · P ${N.P} · R ${N.R} · F/A ${N['F/A']}</div>`+
- `<div class="cr"><span>Reperibilità</span><b>${f(R)} [${q}]</b></div><div class="cs">Gr ${N.Gr} · Nr ${N.Nr} · GNR ${N.GNR}</div>`+
+ `<div class="cr"><span>Reperibilità</span><b>${f(R)} [${q}]</b></div><div class="cs">Gr ${N.Gr} · Nr ${N.Nr}</div>`+
  `<div class="cr"><span>Altre attività</span><b>${f(G)}</b></div><div class="cs">${ng} attività</div>`+
  `<div class="ch">Reperibilità per giorno · ${MS[m]} ${y}</div><div class="wb">${W.map((n,i)=>`<div class="wc"><span>${n}</span><i style="height:${n/mx*36}px"></i><small>${DS[i]}</small></div>`).join('')}</div>`+
  `<div class="cr"><span>Weekend con reperibilità</span><b>${wr} su ${wt}</b></div><div class="cr"><span>Weekend liberi</span><b>${wt-wr}</b></div>`}
