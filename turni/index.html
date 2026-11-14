@@ -60,7 +60,7 @@ h1{font-size:22px;margin:14px 0 8px}
 <div class="seg" id="seg"></div>
 <div class="nav"><button id="pv">‹</button><b id="ti"></b><button id="nx">›</button></div>
 <div id="cal"></div>
-<div id="pn"></div>
+<div id="pn"></div><input type="file" id="fi" hidden onchange="if(this.files[0])imp(this.files[0]);this.value=''">
 <div id="sb"><div id="sm" onclick="tc()"></div><div id="calc" hidden><div id="cc"></div></div></div>
 <script>
 const V=['giorno','settimana','mese','anno'],MS=['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre'],DS=['lun','mar','mer','gio','ven','sab','dom'];
@@ -76,14 +76,14 @@ const same=(a,b)=>K(a)===K(b);
 const open=k=>(tasks[k]||[]).some(x=>!x.f&&!x.s);
 const off=d=>(d.getDay()+6)%7;
 const $=id=>document.getElementById(id);
-function go(n){ed=null;
+function go(n){ed=null;msg='';
  if(view==='giorno'){cur=D(cur.getFullYear(),cur.getMonth(),cur.getDate()+n);sel=cur}
  else if(view==='settimana')cur=D(cur.getFullYear(),cur.getMonth(),cur.getDate()+7*n);
  else if(view==='mese')cur=D(cur.getFullYear(),cur.getMonth()+n,1);
  else cur=D(cur.getFullYear()+n,cur.getMonth(),1);
  render();
 }
-function pick(k){ed=null;const[a,b,c]=k.split('-').map(Number);sel=D(a,b-1,c);cur=view==='mese'?cur:sel;render()}
+function pick(k){ed=null;msg='';const[a,b,c]=k.split('-').map(Number);sel=D(a,b-1,c);cur=view==='mese'?cur:sel;render()}
 function render(){
  $('seg').innerHTML=V.map(v=>`<button class="${v===view?'on':''}" onclick="view='${v}';if(view==='giorno')cur=sel;render()">${v}</button>`).join('');
  const today=new Date();let h='',t='';
@@ -110,7 +110,7 @@ function render(){
  if(view==='giorno'){const e=$('tl');e.scrollTop=tlTop;e.onscroll=()=>{tlTop=e.scrollTop}}
  if(view==='anno'){$('pn').innerHTML='';return}
  const k=K(sel),l=tasks[k]||[];
- $('pn').innerHTML=`<div class="panel"><div class="ph"><h2>${DS[off(sel)]} ${sel.getDate()} ${MS[sel.getMonth()]}</h2><div class="pb"><button id="bu" aria-label="Carica"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></button><button id="bd" aria-label="Scarica"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg></button></div></div>`+
+ $('pn').innerHTML=`<div class="panel"><div class="ph"><h2>${DS[off(sel)]} ${sel.getDate()} ${MS[sel.getMonth()]}</h2><div class="pb"><button id="bu" aria-label="Carica" onclick="$('fi').click()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg></button><button id="bd" aria-label="Scarica" onclick="exp()"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg></button></div></div>${msg?`<div class="em">${esc(msg)}</div>`:''}`+
   (l.length?l.map((x,i)=>i===ed?`<div class="it"><span>${esc(x.t)}</span><input type="time" id="eh" value="${x.h||''}"><input type="time" id="ef" value="${x.e||''}"><button class="sv" onclick="saveEd()">✓</button><button class="x" onclick="ed=null;render()">✕</button></div>`:`<div class="it${x.f?' d':''}">${x.s?'':`<input type="checkbox" ${x.f?'checked':''} onchange="tog(${i})">`}<span onclick="edt(${i})" style="cursor:pointer">${esc(x.t)} ${x.h?`<small>${x.h}${x.e?'–'+x.e+(x.n?' (giorno dopo)':''):''}</small>`:''}</span><button class="x" onclick="del(${i})">×</button></div>`).join(''):'<div class="em">Nessuna attività</div>')+
   `<div class="add"><input type="text" id="nt" placeholder="Nuova attività" value="${esc(dr.t).replace(/"/g,'&quot;')}" oninput="dr.t=this.value"><input type="time" id="nh" value="${dr.h}" oninput="dr.h=this.value"><input type="time" id="nf" value="${dr.f}" oninput="dr.f=this.value"><button onclick="add()">+</button></div><div class="sh">${['M','P','R','F/A'].map(s=>`<button class="${(shifts[k]||{}).a===s?'on':''}" onclick="setSh('a','${s}')">${s}</button>`).join('')}</div><div class="sh">${['Gr','Nr','GNR'].map(s=>`<button class="${(shifts[k]||{}).b===s?'on':''}" onclick="setSh('b','${s}')">${s}</button>`).join('')}</div></div>`;
 }
@@ -146,6 +146,24 @@ function calcHtml(){const[a,b]=rng(),mm=s=>{const[p,q]=s.split(':').map(Number);
  `<div class="cr"><span>Altre attività</span><b>${f(G)}</b></div><div class="cs">${ng} attività</div>`+
  `<div class="ch">Reperibilità per giorno · ${MS[m]} ${y}</div><div class="wb">${W.map((n,i)=>`<div class="wc"><span>${n}</span><i style="height:${n/mx*36}px"></i><small>${DS[i]}</small></div>`).join('')}</div>`+
  `<div class="cr"><span>Weekend con reperibilità</span><b>${wr} su ${wt}</b></div><div class="cr"><span>Weekend liberi</span><b>${wt-wr}</b></div>`}
+let msg='';
+async function exp(){
+ const ks=Object.keys(tasks).concat(Object.keys(shifts)).filter((k,i,a)=>a.indexOf(k)===i).sort();
+ const ls=ks.map(k=>{const s=shifts[k]||{},o={};if(s.a)o.turno=s.a;if(s.b)o.rep=s.b;o.att=(tasks[k]||[]).map(x=>{const y={t:x.t};if(x.h)y.h=x.h;if(x.e)y.e=x.e;if(x.s)y.s=x.s;if(x.f)y.f=1;return y});return JSON.stringify(k)+':'+JSON.stringify(o)});
+ const txt='{"app":"turni","v":1,"esportato":"'+new Date().toISOString().slice(0,16)+'","giorni":{\n'+ls.join(',\n')+'\n}}\n',nm='turni-'+K(new Date())+'.mpt';
+ let dl=null;try{dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null}catch(e){}
+ if(dl){try{await dl.save({filename:nm+'.txt',data:txt});msg='File salvato ('+ks.length+' giorni)'}catch(e){msg=e&&e.code==='declined'?'':'Salvataggio non riuscito'}}
+ else{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:'application/octet-stream'}));a.download=nm;document.body.appendChild(a);a.click();a.remove();msg='File esportato ('+ks.length+' giorni)'}
+ render()}
+function imp(f){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.app!=='turni'||!d.giorni)throw 0;let n=0,nu=0;const T=/^\d\d:\d\d$/,rk=x=>x.s==='a'?0:x.s==='b'?1:2;
+  Object.keys(d.giorni).forEach(k=>{if(!/^\d{4}-\d\d-\d\d$/.test(k))return;const g=d.giorni[k]||{},o={};let l=[];
+   if(['M','P','R','F/A'].includes(g.turno))o.a=g.turno;if(['Gr','Nr','GNR'].includes(g.rep))o.b=g.rep;
+   (Array.isArray(g.att)?g.att:[]).forEach(x=>{if(!x||typeof x.t!=='string'||!x.t.trim())return;const h=T.test(x.h)?x.h:'',e=h&&T.test(x.e)?x.e:'',y={t:x.t.trim(),h,e,n:h&&e&&e<=h?1:0,f:x.f?1:0};if(x.s==='a'||x.s==='b')y.s=x.s;l.push(y)});
+   l=l.filter(y=>!y.s||o[y.s]);
+   ['a','b'].forEach(q=>{const a=o[q]&&AUTO[o[q]];if(a&&!l.some(y=>y.s===q))l.push({t:a[0],h:a[1]||'',e:a[2]||'',n:a[3]||0,f:0,s:q})});
+   l.sort((p,q)=>rk(p)-rk(q));n++;if(!tasks[k]&&!shifts[k])nu++;
+   if(l.length)tasks[k]=l;else delete tasks[k];if(o.a||o.b)shifts[k]=o;else delete shifts[k]});
+  save();msg='Importati '+n+' giorni ('+nu+' nuovi)'}catch(e){msg='File non valido'}render()};r.readAsText(f)}
 let co=0;function tc(){co=!co;$('calc').hidden=!co;$('sm').innerHTML=sumHtml()}
 let tlTop=7*48;
 function tline(k,pk){const HH=48,l=tasks[k]||[],mm=s=>{const[a,b]=s.split(':').map(Number);return a*60+b};
