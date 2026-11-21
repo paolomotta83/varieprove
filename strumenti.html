@@ -1,493 +1,155 @@
-
-
 <!doctype html>
-
-<html lang="it">
-
-<head>
-
-<meta charset="utf-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catalogo fotografico strumentario chirurgico perioculare</title>
-
 <style>
-
-@page {
-
-  size: A4 portrait;
-
-  margin: 12mm;
-
-}
-
-* {
-
-  box-sizing: border-box;
-
-}
-
-body {
-
-  margin: 0;
-
-  font-family: Arial, Helvetica, sans-serif;
-
-  color: #263340;
-
-  background: #eef2f4;
-
-}
-
-.page {
-
-  width: 210mm;
-
-  min-height: 297mm;
-
-  padding: 12mm;
-
-  margin: 10mm auto;
-
-  background: #fff;
-
-  page-break-after: always;
-
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 7mm;
-
-}
-
-.page:last-child {
-
-  page-break-after: auto;
-
-}
-
-.header {
-
-  border-bottom: 2px solid #1f7e82;
-
-  padding-bottom: 4mm;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: end;
-
-}
-
-.kicker {
-
-  font-size: 8pt;
-
-  letter-spacing: 1.1px;
-
-  text-transform: uppercase;
-
-  color: #1f7e82;
-
-  font-weight: bold;
-
-}
-
-h1 {
-
-  margin: 1mm 0 0;
-
-  font-size: 19pt;
-
-  color: #182a3e;
-
-}
-
-.pageno {
-
-  font-size: 9pt;
-
-  color: #607482;
-
-  white-space: nowrap;
-
-}
-
-.card {
-
-  flex: 1;
-
-  min-height: 0;
-
-  border: 1px solid #d8e1e6;
-
-  border-radius: 4mm;
-
-  padding: 6mm;
-
-  display: grid;
-
-  grid-template-columns: 86mm 1fr;
-
-  gap: 7mm;
-
-  align-items: center;
-
-}
-
-/* SFONDO BLU EFFETTO TELO CHIRURGICO */
-
-.photo-wrap {
-
-  height: 92mm;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  background-color: #245b83;
-
-  background-image:
-
-    radial-gradient(
-
-      ellipse at 18% 22%,
-
-      rgba(255,255,255,.15),
-
-      transparent 38%
-
-    ),
-
-    radial-gradient(
-
-      ellipse at 82% 72%,
-
-      rgba(4,28,55,.22),
-
-      transparent 42%
-
-    ),
-
-    repeating-linear-gradient(
-
-      12deg,
-
-      rgba(255,255,255,.035) 0,
-
-      rgba(255,255,255,.035) 1px,
-
-      transparent 1px,
-
-      transparent 5px
-
-    ),
-
-    linear-gradient(
-
-      135deg,
-
-      #397aa4,
-
-      #17496f
-
-    );
-
-  border: 1px solid #e5ebef;
-
-  border-radius: 2mm;
-
-  overflow: hidden;
-
-}
-
-.photo-wrap img {
-
-  width: 100%;
-
-  height: 100%;
-
-  object-fit: contain;
-
-  mix-blend-mode: multiply;
-
-}
-
-.num {
-
-  font-size: 8pt;
-
-  color: #1f7e82;
-
-  font-weight: bold;
-
-  letter-spacing: 1px;
-
-}
-
-h2 {
-
-  font-size: 15pt;
-
-  line-height: 1.2;
-
-  margin: 2mm 0 1mm;
-
-  color: #182a3e;
-
-}
-
-.en {
-
-  font-size: 9pt;
-
-  color: #607482;
-
-  font-style: italic;
-
-  margin-bottom: 5mm;
-
-}
-
-p {
-
-  font-size: 9.5pt;
-
-  line-height: 1.45;
-
-  margin: 0 0 4mm;
-
-}
-
-.source {
-
-  font-size: 7.5pt;
-
-  line-height: 1.35;
-
-  color: #607482;
-
-  overflow-wrap: anywhere;
-
-}
-
-.source a {
-
-  color: #1f7e82;
-
-}
-
-.footer {
-
-  border-top: 1px solid #d8e1e6;
-
-  padding-top: 3mm;
-
-  font-size: 7pt;
-
-  color: #607482;
-
-  display: flex;
-
-  justify-content: space-between;
-
-  gap: 5mm;
-
-}
-
-.notice {
-
-  font-size: 8pt;
-
-  color: #6b7280;
-
-  line-height: 1.4;
-
-}
-
-@media print {
-
-  body {
-
-    background: #fff;
-
-  }
-
-  .page {
-
-    margin: 0;
-
-    box-shadow: none;
-
-  }
-
-}
-
-@media screen {
-
-  .page {
-
-    box-shadow: 0 3px 18px #0001;
-
-  }
-
-}
-
-</style>
-
-</head>
-
-<body>
-
-<!-- MODELLO DI SCHEDA -->
-
-<section class="page">
-
-<header class="header">
-
-  <div>
-
-    <div class="kicker">
-
-      Catalogo fotografico • Chirurgia oculoplastica
-
-    </div>
-
-    <h1>Strumentario perioculare e palpebrale</h1>
-
-  </div>
-
-  <div class="pageno">Pagina 1 / 13</div>
-
-</header>
-
+@page { size: A4 portrait; margin: 12mm; }
+* { box-sizing: border-box; }
+body { margin:0; font-family: Arial, Helvetica, sans-serif; color:#263340; background:#eef2f4; }
+.page { width:210mm; min-height:297mm; padding:12mm; margin:10mm auto; background:#fff; page-break-after:always; display:flex; flex-direction:column; gap:7mm; }
+.page:last-child { page-break-after:auto; }
+.header { border-bottom:2px solid #1f7e82; padding-bottom:4mm; display:flex; justify-content:space-between; align-items:end; }
+.kicker { font-size:8pt; letter-spacing:1.1px; text-transform:uppercase; color:#1f7e82; font-weight:bold; }
+h1 { margin:1mm 0 0; font-size:19pt; color:#182a3e; }
+.pageno { font-size:9pt; color:#607482; white-space:nowrap; }
+.card { flex:1; min-height:0; border:1px solid #d8e1e6; border-radius:4mm; padding:6mm; display:grid; grid-template-columns: 86mm 1fr; gap:7mm; align-items:center; }
+.photo-wrap { height:92mm; display:flex; align-items:center; justify-content:center; background-color:#245b83; background-image: radial-gradient(ellipse at 18% 22%, rgba(255,255,255,.15), transparent 38%), radial-gradient(ellipse at 82% 72%, rgba(4,28,55,.22), transparent 42%), repeating-linear-gradient(12deg, rgba(255,255,255,.035) 0, rgba(255,255,255,.035) 1px, transparent 1px, transparent 5px), linear-gradient(135deg,#397aa4,#17496f); border:1px solid #e5ebef; border-radius:2mm; overflow:hidden; }
+.photo-wrap img { width:100%; height:100%; object-fit:contain; mix-blend-mode:multiply; }
+.num { font-size:8pt; color:#1f7e82; font-weight:bold; letter-spacing:1px; }
+h2 { font-size:15pt; line-height:1.2; margin:2mm 0 1mm; color:#182a3e; }
+.en { font-size:9pt; color:#607482; font-style:italic; margin-bottom:5mm; }
+p { font-size:9.5pt; line-height:1.45; margin:0 0 4mm; }
+.source { font-size:7.5pt; line-height:1.35; color:#607482; overflow-wrap:anywhere; }
+.source a { color:#1f7e82; }
+.footer { border-top:1px solid #d8e1e6; padding-top:3mm; font-size:7pt; color:#607482; display:flex; justify-content:space-between; gap:5mm; }
+.notice { font-size:8pt; color:#6b7280; line-height:1.4; }
+@media print { body { background:#fff; } .page { margin:0; box-shadow:none; } }
+@media screen { .page { box-shadow:0 3px 18px #0001; } }
+</style></head><body>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 1 / 13</div></header>
 <article class="card">
-
-  <div class="photo-wrap">
-
-    <img
-
-      src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/bard-parker-3-2180.jpg"
-
-      alt="Manico bisturi n. 3 + lama n. 15"
-
-      loading="eager"
-
-    >
-
-  </div>
-
-  <div>
-
-    <div class="num">STRUMENTO 01</div>
-
-    <h2>Manico bisturi n. 3 + lama n. 15</h2>
-
-    <div class="en">
-
-      Scalpel handle #3 + blade #15
-
-    </div>
-
-    <p>
-
-      Impugnatura compatibile con lama n. 15;
-
-      strumento per incisione cutanea controllata.
-
-    </p>
-
-    <div class="source">
-
-      <b>Fonte fotografia:</b><br>
-
-      <a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm">
-
-        University of Iowa – EyeRounds,
-
-        Oculoplastic Basic Tray
-
-      </a>
-
-    </div>
-
-  </div>
-
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/bard-parker-3-2180.jpg" alt="Manico bisturi n. 3 + lama n. 15" loading="eager"></div>
+<div><div class="num">STRUMENTO 01</div><h2>Manico bisturi n. 3 + lama n. 15</h2><div class="en">Scalpel handle #3 + blade #15</div><p>Impugnatura compatibile con lama n. 15; strumento per incisione cutanea controllata.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
 </article>
-
 <article class="card">
-
-  <div class="photo-wrap">
-
-    <img
-
-      src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Storz-Iris-Scissors-Curved-Small-2202.jpg"
-
-      alt="Forbici Iris"
-
-      loading="eager"
-
-    >
-
-  </div>
-
-  <div>
-
-    <div class="num">STRUMENTO 02</div>
-
-    <h2>Forbici Iris</h2>
-
-    <div class="en">Iris scissors</div>
-
-    <p>
-
-      Forbici corte e fini, disponibili rette o curve,
-
-      per taglio e rifinitura delicata.
-
-    </p>
-
-  </div>
-
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Storz-Iris-Scissors-Curved-Small-2202.jpg" alt="Forbici Iris" loading="eager"></div>
+<div><div class="num">STRUMENTO 02</div><h2>Forbici Iris</h2><div class="en">Iris scissors</div><p>Forbici corte e fini, disponibili rette o curve, per taglio e rifinitura delicata.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
 </article>
-
-<div class="notice">
-
-  Le immagini sono fotografie di prodotto reperite online.
-
-  Lo sfondo blu richiama un telo chirurgico ed è un
-
-  trattamento grafico del riquadro.
-
-</div>
-
-<footer class="footer">
-
-  <span>
-
-    Uso didattico • Verificare modello, misura e indicazione
-
-    con l’équipe chirurgica
-
-  </span>
-
-  <span>Strumentario perioculare</span>
-
-</footer>
-
-</section>
-
-<!-- Le altre schede seguono lo stesso modello.
-
-     Nel file completo sono presenti tutti i 25 strumenti
-
-     distribuiti su 13 pagine. -->
-
-</body>
-
-</html>
+<div class="notice">Le immagini sono fotografie di prodotto reperite online e collegate alle rispettive schede; lo sfondo blu richiama un telo chirurgico ed è un trattamento grafico del riquadro, non necessariamente lo sfondo originale dello scatto. Alcune immagini sono rappresentative di una famiglia di strumenti e non certificano il modello esatto, la misura o la variante. Verificare sempre il codice prodotto e la configurazione con il chirurgo e con il fornitore. Uso didattico.</div>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 2 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Stevens-Tenotomy-Scissors-Curved-2200.jpg" alt="Forbici Stevens" loading="eager"></div>
+<div><div class="num">STRUMENTO 03</div><h2>Forbici Stevens</h2><div class="en">Stevens tenotomy scissors</div><p>Forbici da tenotomia/dissezione, con varianti rette o curve e punte smusse o appuntite.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Westcott-Tenotomy-Scissors-blunt2184.jpg" alt="Forbici Westcott" loading="eager"></div>
+<div><div class="num">STRUMENTO 04</div><h2>Forbici Westcott</h2><div class="en">Westcott tenotomy scissors</div><p>Forbici oftalmiche a molla per dissezione e taglio delicato; esistono diverse geometrie di punta.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 3 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Brown-Adson-Tissue-Forceps-2175.jpg" alt="Pinza Adson-Brown" loading="eager"></div>
+<div><div class="num">STRUMENTO 05</div><h2>Pinza Adson-Brown</h2><div class="en">Adson-Brown tissue forceps</div><p>Pinza da presa con dentellatura multipla; la configurazione delle punte varia secondo il modello.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://puntomedic.cl/cdn/shop/files/pinzabishopharmonWw.jpg?v=1709034375&amp;width=3840" alt="Pinza Bishop-Harmon" loading="eager"></div>
+<div><div class="num">STRUMENTO 06</div><h2>Pinza Bishop-Harmon</h2><div class="en">Bishop-Harmon tissue forceps</div><p>Pinza oftalmica fine per presa e manipolazione dei tessuti; verificare dentatura e calibro della punta.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://puntomedic.cl/products/pinza-bishop-harmon-8-5-cm" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 4 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Castroviejo-Delicate-Straight-Needle-Holder-w-Lock-2159.jpg" alt="Porta-aghi Castroviejo" loading="eager"></div>
+<div><div class="num">STRUMENTO 07</div><h2>Porta-aghi Castroviejo</h2><div class="en">Castroviejo needle holder</div><p>Porta-aghi microchirurgico a molla, con varianti rette/curve e con/senza blocco.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://stellmachermed.com/cdn/shop/files/SM-8111-01.jpg?v=1753776585&amp;width=1946" alt="Calibro Castroviejo" loading="eager"></div>
+<div><div class="num">STRUMENTO 08</div><h2>Calibro Castroviejo</h2><div class="en">Castroviejo caliper</div><p>Calibro graduato per misurazioni di precisione e confronto delle distanze palpebrali.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://stellmachermed.com/products/castroviejo-caliper-0-20mm-3-5-8-89cm-surgical-dental-measuring-instrument" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 5 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://stellmachermed.com/cdn/shop/files/BP-Iris_-03.jpg?v=1753777202&amp;width=1445" alt="Pinza bipolare oftalmologica" loading="eager"></div>
+<div><div class="num">STRUMENTO 09</div><h2>Pinza bipolare oftalmologica</h2><div class="en">Ophthalmic bipolar forceps</div><p>Pinza isolata collegata a generatore bipolare; selezionare punta, angolazione e compatibilità secondo il sistema.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://stellmachermed.com/products/iris-bipolar-forceps-108mm-0-3mm-tip-straight" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Joseph-Double-Hook-2142.jpg" alt="Uncino cutaneo Joseph" loading="eager"></div>
+<div><div class="num">STRUMENTO 10</div><h2>Uncino cutaneo Joseph</h2><div class="en">Joseph skin hook</div><p>Uncino singolo o doppio per retrazione delicata dei margini cutanei.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 6 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://www.jedmed.com/cdn/shop/products/52-4794_5000x.jpg?v=1624047129" alt="Divaricatore Desmarres" loading="eager"></div>
+<div><div class="num">STRUMENTO 11</div><h2>Divaricatore Desmarres</h2><div class="en">Desmarres lid retractor</div><p>Retrattore palpebrale a paletta per esposizione e retrazione della palpebra.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.jedmed.com/products/desmarres-retractor-2" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://i.ebayimg.com/00/s/MTA0MlgxNjAw/z/BG8AAOSw0Wtj6y98/%24_57.JPG?set_id=880000500F" alt="Pinza di fissazione / Bonn" loading="eager"></div>
+<div><div class="num">STRUMENTO 12</div><h2>Pinza di fissazione / Bonn</h2><div class="en">Bonn fixation forceps</div><p>Pinza di fissazione oftalmica; la fotografia è un riferimento visivo di pinza fine: verificare il modello esatto prima dell&#x27;acquisto.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.ebay.com/itm/125192560258" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 7 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Thumbnails/DSC_2164-thumb.jpg" alt="Cannula di aspirazione Frazier" loading="eager"></div>
+<div><div class="num">STRUMENTO 13</div><h2>Cannula di aspirazione Frazier</h2><div class="en">Frazier suction cannula</div><p>Cannula sottile con controllo dell&#x27;aspirazione; calibro e curva dipendono dalla tecnica.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Jaeger-Lid-Plate-2195.jpg" alt="Placca palpebrale Jaeger" loading="eager"></div>
+<div><div class="num">STRUMENTO 14</div><h2>Placca palpebrale Jaeger</h2><div class="en">Jaeger lid plate</div><p>Placca metallica di supporto/retrazione palpebrale, scelta secondo accesso e necessità di protezione.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 8 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://www.asolmed.com/uploads/173.jpg" alt="Scudo sclerale/corneale" loading="eager"></div>
+<div><div class="num">STRUMENTO 15</div><h2>Scudo sclerale/corneale</h2><div class="en">Scleral / corneal shield</div><p>Schermo metallico di protezione oculare; verificare tipo, misura e indicazione con il chirurgo.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.asolmed.com/stainless-steel-laser-eye-protection-shield-ocular-shield-with-handle-product/" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Westcott-Tenotomy-Scissors-sharp2186.jpg" alt="Forbici microchirurgiche Westcott" loading="eager"></div>
+<div><div class="num">STRUMENTO 16</div><h2>Forbici microchirurgiche Westcott</h2><div class="en">Westcott microsurgical scissors</div><p>Esempio di forbice oftalmica fine; scegliere il profilo corretto per l&#x27;accesso previsto.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 9 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://stellmachermed.com/cdn/shop/files/BP-Iris_-03.jpg?v=1753777202&amp;width=1445" alt="Pinza bipolare a punta fine" loading="eager"></div>
+<div><div class="num">STRUMENTO 17</div><h2>Pinza bipolare a punta fine</h2><div class="en">Fine-tip bipolar forceps</div><p>Variante a punta sottile per coagulazione precisa; la punta mostrata è un esempio di modello bipolare oftalmico.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://stellmachermed.com/products/iris-bipolar-forceps-108mm-0-3mm-tip-straight" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://stellmachermed.com/cdn/shop/files/BP-Iris_-03.jpg?v=1753777202&amp;width=1445" alt="Pinza bipolare retta/angolata" loading="eager"></div>
+<div><div class="num">STRUMENTO 18</div><h2>Pinza bipolare retta/angolata</h2><div class="en">Straight / angled bipolar forceps</div><p>La geometria retta o angolata va scelta in base all&#x27;esposizione e alla compatibilità del generatore.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://stellmachermed.com/products/iris-bipolar-forceps-108mm-0-3mm-tip-straight" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 10 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Thumbnails/DSC_2163-thumb.jpg" alt="Cannula aspirazione fine" loading="eager"></div>
+<div><div class="num">STRUMENTO 19</div><h2>Cannula aspirazione fine</h2><div class="en">Fine suction cannula</div><p>Cannula per aspirazione controllata nel campo operatorio; scegliere calibro e lunghezza appropriati.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://corzaeye.com/media/catalog/product/s/k/sku_90_7001_needleholdercastroviejo_withlock.jpg" alt="Porta-aghi Castroviejo" loading="eager"></div>
+<div><div class="num">STRUMENTO 20</div><h2>Porta-aghi Castroviejo</h2><div class="en">Castroviejo needle holder</div><p>Strumento per presa dell&#x27;ago e sutura fine; disponibili modelli con blocco o senza blocco.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://corzaeye.com/castroviejo-needle-holder-straight-w-lock-k6-1560" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 11 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/Full%20size/Castroviejo-Suturing-Forceps-2206.jpg" alt="Pinza da sutura oftalmica" loading="eager"></div>
+<div><div class="num">STRUMENTO 21</div><h2>Pinza da sutura oftalmica</h2><div class="en">Ophthalmic tying / suturing forceps</div><p>Pinza fine per manipolare filo e tessuti durante la sutura; scegliere la punta in base al filo utilizzato.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://eyerounds.org/tutorials/instruments/Oculoplastics/OculoplasticTray/index.htm" target="_blank" rel="noopener">University of Iowa – EyeRounds, Oculoplastic Basic Tray (foto: B. Critser)</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://www.akritiophthalmic.com/cdn/shop/files/E2508_EDIT4___Source-1500x1500-1.jpg?v=1753784055" alt="Pinza di Putterman" loading="eager"></div>
+<div><div class="num">STRUMENTO 22</div><h2>Pinza di Putterman</h2><div class="en">Putterman ptosis clamp</div><p>Clamp dedicata a specifiche tecniche di chirurgia della ptosi, in particolare procedure selezionate sul complesso di Müller.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.akritiophthalmic.com/products/putterman-clamp" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 12 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://corzaeye.com/media/catalog/product/cache/5f2ed3738bcfe08a4d10d357e5f6c17b/b/e/berke-ptosis-forceps-20mm-k5-9300.jpg" alt="Pinza di Berke per ptosi" loading="eager"></div>
+<div><div class="num">STRUMENTO 23</div><h2>Pinza di Berke per ptosi</h2><div class="en">Berke ptosis forceps</div><p>Pinza specialistica per procedure di correzione della ptosi; verificare apertura e dimensioni delle branche.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://corzaeye.com/berke-ptosis-forceps-20mm-k5-9300" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<article class="card">
+<div class="photo-wrap"><img src="https://i.ebayimg.com/00/s/MTYwMFgxNjAw/z/P3gAAOSwxBllEskn/%24_57.JPG?set_id=880000500F" alt="Strumentario per cantopessi/cantoplastica" loading="eager"></div>
+<div><div class="num">STRUMENTO 24</div><h2>Strumentario per cantopessi/cantoplastica</h2><div class="en">Canthopexy / canthoplasty instruments</div><p>Set variabile di pinze fini, forbici e porta-aghi; l&#x27;immagine mostra uno strumentario di microchirurgia/blefaroplastica come riferimento generale.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.ebay.it/itm/355060122576" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+<section class="page"><header class="header"><div><div class="kicker">Catalogo fotografico • Chirurgia oculoplastica</div><h1>Strumentario perioculare e palpebrale</h1></div><div class="pageno">Pagina 13 / 13</div></header>
+<article class="card">
+<div class="photo-wrap"><img src="https://www.precisemedical.com.au/cdn/shop/files/imatec-medical-basic-single-use-fat-transfer-kit.jpg?v=1698115275" alt="Cannule e siringhe per lipofilling" loading="eager"></div>
+<div><div class="num">STRUMENTO 25</div><h2>Cannule e siringhe per lipofilling</h2><div class="en">Fat grafting cannulas and syringes</div><p>Set fotografico di cannule e siringhe per trasferimento adiposo; dimensioni e configurazione vanno definite dalla tecnica.</p><div class="source"><b>Fonte fotografia:</b><br><a href="https://www.precisemedical.com.au/products/imatec-medical-basic-single-use-fat-transfer-kit" target="_blank" rel="noopener">Apri scheda/catalogo del produttore o fornitore</a></div></div>
+</article>
+<footer class="footer"><span>Uso didattico • Verificare modello, misura e indicazione con l’équipe chirurgica</span><span>Strumentario perioculare</span></footer></section>
+</body></html>
